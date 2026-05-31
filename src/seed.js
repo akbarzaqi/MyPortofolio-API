@@ -23,6 +23,18 @@ async function seed() {
         role: 'admin',
     }
     try {
+
+        const checkAdminQuery = {
+            text: 'SELECT * FROM users WHERE email = $1',
+            values: [dataAdmin.email],
+        };
+        const res = await client.query(checkAdminQuery);
+        
+        if (res.rows.length > 0) {
+            console.log('Data admin sudah ada, tidak perlu ditambahkan');
+            return;
+        }
+
         const query = {
             text: 'INSERT INTO users (id, name, email, password, role) VALUES ($1, $2, $3, $4, $5)',
             values: [dataAdmin.id, dataAdmin.name, dataAdmin.email, dataAdmin.password, dataAdmin.role],
