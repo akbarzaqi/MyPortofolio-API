@@ -5,9 +5,6 @@ class ExperienceService {
     constructor() {
         this.Pool = new Pool({
             connectionString: process.env.DATABASE_URL || `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.DB_HOST || 'localhost'}:${process.env.POSTGRES_PORT || 5432}/${process.env.POSTGRES_DB}`,
-            ssl : {
-                rejectUnauthorized: false
-            },
             user: process.env.POSTGRES_USER,
             database: process.env.POSTGRES_DB,
             password: process.env.POSTGRES_PASSWORD,
