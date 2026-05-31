@@ -1,6 +1,9 @@
 const {nanoid} = require('nanoid');
 const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 async function seed() {
     const pool = new Pool({
