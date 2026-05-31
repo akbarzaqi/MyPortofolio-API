@@ -7,11 +7,15 @@ dotenv.config();
 
 async function seed() {
     const pool = new Pool({
+        connectionString: process.env.DATABASE_URL || `postgresql://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.DB_HOST || 'localhost'}:${process.env.POSTGRES_PORT || 5432}/${process.env.POSTGRES_DB}`,
+        ssl : {
+            rejectUnauthorized: false
+        },
         user: process.env.POSTGRES_USER,
         database: process.env.POSTGRES_DB,
         password: process.env.POSTGRES_PASSWORD,
         host: process.env.DB_HOST || 'localhost',
-        port: 5432,
+        port: process.env.POSTGRES_PORT || 5432,
     });
 
     const client = await pool.connect();
@@ -29,7 +33,7 @@ async function seed() {
             values: [dataAdmin.email],
         };
         const res = await client.query(checkAdminQuery);
-        
+
         if (res.rows.length > 0) {
             console.log('Data admin sudah ada, tidak perlu ditambahkan');
             return;
